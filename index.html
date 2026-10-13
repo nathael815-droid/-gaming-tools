@@ -1,0 +1,189 @@
+
+
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gaming Tools</title>
+
+<style>
+
+body{margin:0;background:#0b0d16;color:white;font-family:Arial,sans-serif;padding:20px}
+
+header{text-align:center;padding:25px 0}
+
+h1{font-size:38px;color:#a78bfa}
+
+p{color:#b9c2d8}
+
+.card{background:#171c2b;border:1px solid #343b53;border-radius:16px;padding:20px;margin:18px 0}
+
+input,select{box-sizing:border-box;width:100%;padding:13px;margin:8px 0;background:#0b1020;color:white;border:1px solid #434c69;border-radius:9px;font-size:16px}
+
+button{padding:12px;background:#a78bfa;color:#111;font-weight:bold;border:0;border-radius:9px;font-size:16px;width:100%;margin-top:8px}
+
+.result{margin-top:15px;padding:12px;background:#0b1020;border-radius:8px;overflow-wrap:anywhere}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>🎮 Gaming Tools</h1>
+
+<p>Des outils gratuits pour tous les gamers !</p>
+
+</header>
+
+<section class="card">
+
+<h2>🔥 Générateur de pseudos</h2>
+
+<p>Crée ton prochain pseudo de gamer.</p>
+
+<select id="style">
+
+<option value="pro">Compétitif</option>
+
+<option value="dark">Sombre</option>
+
+<option value="fun">Drôle</option>
+
+<option value="clean">Simple</option>
+
+</select>
+
+<input id="mot" placeholder="Un mot à inclure (facultatif)">
+
+<button onclick="pseudo()">Générer des pseudos</button>
+
+<div class="result" id="pseudos">Tes pseudos apparaîtront ici.</div>
+
+</section>
+
+<section class="card">
+
+<h2>📊 Calculateur de ratio</h2>
+
+<label>Éliminations</label>
+
+<input id="kills" type="number" min="0" placeholder="Ex : 125">
+
+<label>Morts</label>
+
+<input id="deaths" type="number" min="0" placeholder="Ex : 50">
+
+<button onclick="ratio()">Calculer mon ratio</button>
+
+<div class="result" id="ratioResult">Ton résultat apparaîtra ici.</div>
+
+</section>
+
+<section class="card">
+
+<h2>🎯 Convertisseur de sensibilité</h2>
+
+<p>Estimation basée sur le DPI de ta souris.</p>
+
+<label>Sensibilité actuelle</label>
+
+<input id="sens" type="number" min="0" step="any" placeholder="Ex : 5">
+
+<label>DPI actuel</label>
+
+<input id="dpi1" type="number" min="1" value="800">
+
+<label>Nouveau DPI</label>
+
+<input id="dpi2" type="number" min="1" value="1600">
+
+<button onclick="convertir()">Convertir</button>
+
+<div class="result" id="sensResult">Ton résultat apparaîtra ici.</div>
+
+</section>
+
+<p style="text-align:center">Gaming Tools · Gratuit pour tous les gamers 🎮</p>
+
+<script>
+
+function pseudo(){
+
+const styles={
+
+pro:["Clutch","Aim","Rush","Flick","Vex","Strafe","Peak"],
+
+dark:["Shadow","Phantom","Void","Ghost","Raven","Night","Hex"],
+
+fun:["Patate","Panda","Tacos","Biscuit","Pigeon","Kiwi","Pixel"],
+
+clean:["Nova","Lynx","Echo","Luma","Nexo","Orbit","Kairo"]
+
+};
+
+const fins=["X","FR","GG","One","Z","Fox","Play","YT","Pro","Wave"];
+
+let mot=document.getElementById("mot").value.trim().replace(/[^a-zA-Z0-9_]/g,"");
+
+let style=document.getElementById("style").value;
+
+let resultat=[];
+
+while(resultat.length<6){
+
+let nom=(mot || styles[style][Math.floor(Math.random()*styles[style].length)])+fins[Math.floor(Math.random()*fins.length)];
+
+if(!resultat.includes(nom)) resultat.push(nom);
+
+}
+
+document.getElementById("pseudos").innerHTML=resultat.join("<br>");
+
+}
+
+function ratio(){
+
+let a=document.getElementById("kills").value;
+
+let b=document.getElementById("deaths").value;
+
+let out=document.getElementById("ratioResult");
+
+if(a===""||b===""||Number(a)<0||Number(b)<0){out.textContent="Entre deux nombres positifs ou nuls.";return;}
+
+if(Number(b)===0){out.textContent=Number(a)===0?"Ratio indéfini.":"Ratio infini : division par zéro.";return;}
+
+out.textContent="Ton ratio est de "+(Number(a)/Number(b)).toFixed(2);
+
+}
+
+function convertir(){
+
+let s=Number(document.getElementById("sens").value);
+
+let a=Number(document.getElementById("dpi1").value);
+
+let b=Number(document.getElementById("dpi2").value);
+
+let out=document.getElementById("sensResult");
+
+if(document.getElementById("sens").value===""||s<0||a<=0||b<=0){out.textContent="Vérifie les valeurs saisies.";return;}
+
+out.textContent="Sensibilité estimée : "+(s*a/b).toFixed(3);
+
+}
+
+</script>
+
+</body>
+
+</html>
