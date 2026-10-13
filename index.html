@@ -184,6 +184,49 @@ out.textContent="Sensibilité estimée : "+(s*a/b).toFixed(3);
 
 </script>
 
+<section style="max-width:480px;margin:25px auto;padding:22px;background:#151d32;color:white;border:1px solid #33456b;border-radius:18px;font-family:Arial,sans-serif;">
+  <h2 style="text-align:center;">🎯 Calculateur de sensibilité</h2>
+  <p style="color:#bac8e5;text-align:center;">Calcule une sensibilité adaptée à ton jeu.</p>
+
+  <label for="sens-jeu">Sensibilité actuelle</label>
+  <input id="sens-jeu" type="number" min="0" step="any" placeholder="Ex. 5" style="display:block;width:100%;padding:12px;margin:8px 0 16px;border-radius:8px;">
+
+  <label for="sens-multi">Multiplicateur souhaité</label>
+  <select id="sens-multi" style="display:block;width:100%;padding:12px;margin:8px 0 16px;border-radius:8px;">
+    <option value="0.5">Plus lente (× 0,5)</option>
+    <option value="0.75">Un peu plus lente (× 0,75)</option>
+    <option value="1" selected>Identique (× 1)</option>
+    <option value="1.25">Un peu plus rapide (× 1,25)</option>
+    <option value="1.5">Plus rapide (× 1,5)</option>
+    <option value="2">Deux fois plus rapide (× 2)</option>
+  </select>
+
+  <button type="button" onclick="calculerSensGT()" style="width:100%;padding:14px;background:#5278ff;color:white;border:0;border-radius:10px;font-weight:bold;font-size:16px;">
+    Calculer
+  </button>
+
+  <p id="resultat-sens-gt" aria-live="polite" style="text-align:center;margin-top:18px;"></p>
+
+  <script>
+    function calculerSensGT() {
+      const entree = document.getElementById('sens-jeu');
+      const multiplicateur = Number(document.getElementById('sens-multi').value);
+      const resultat = document.getElementById('resultat-sens-gt');
+      const valeur = Number(entree.value);
+
+      if (entree.value.trim() === '' || !Number.isFinite(valeur) || valeur < 0) {
+        resultat.textContent = 'Entre une sensibilité valide.';
+        return;
+      }
+
+      resultat.textContent = 'Sensibilité calculée : ' +
+        (valeur * multiplicateur).toLocaleString('fr-FR', {
+          maximumFractionDigits: 4
+        });
+    }
+  </script>
+</section>
+
 </body>
 
 </html>
